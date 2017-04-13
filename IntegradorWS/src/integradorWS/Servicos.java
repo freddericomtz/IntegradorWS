@@ -88,4 +88,17 @@ public class Servicos {
 		return "Informacoes do Usuario logado \n Id:"+usuario.getId()+" | Nome: "+usuario.getNome()+" | Login: "+usuario.getLogin()+
 				" | Senha: "+usuario.getSenha()+" | Ultima vez logado: "+dataultimoLogin;
 	}
+	
+	@Path("/consultaMapaCalor")
+	@GET
+	public String calor(){
+	
+		String jeison = "[\n  {\"lat\" : -25.5469, \"lng\" : -54.5882 } ,\n  {\"lat\" : -25.5300, \"lng\" : -54.5700 } ,\n  {\"lat\" : -25.5100, \"lng\" : -54.5600 } ,\n  {\"lat\" : -25.5400, \"lng\" : -54.5872 } ,\n  {\"lat\" : -25.5310, \"lng\" : -54.5720 } ,\n  {\"lat\" : -25.5100, \"lng\" : -54.5600 },\n  {\"lat\" : -25.5000, \"lng\" : -54.5700 } ,\n  {\"lat\" : -25.4900, \"lng\" : -54.5600 } ,\n  {\"lat\" : -25.4900, \"lng\" : -54.5600 } ,\n  {\"lat\" : -25.5000, \"lng\" : -54.5610 } ,\n  {\"lat\" : -25.5000, \"lng\" : -54.5540 } ,\n  {\"lat\" : -25.5000, \"lng\" : -54.5611 } ,\n  {\"lat\" : -25.5470, \"lng\" : -54.5882 } ,\n  {\"lat\" : -25.5371, \"lng\" : -54.5700 } ,\n  {\"lat\" : -25.5450, \"lng\" : -54.5882 } ,\n  {\"lat\" : -25.5320, \"lng\" : -54.5700 } ,\n  {\"lat\" : -25.5479, \"lng\" : -54.5882 } ,\n  {\"lat\" : -25.5330, \"lng\" : -54.5700 } ,\n  {\"lat\" : -25.5459, \"lng\" : -54.5650 } ,\n  {\"lat\" : -25.5649, \"lng\" : -54.5600 } ,\n  {\"lat\" : -25.5446, \"lng\" : -54.5550 } ,\n  {\"lat\" : -25.5649, \"lng\" : -54.5500 } ,\n  {\"lat\" : -25.5369, \"lng\" : -54.5450 } ,\n  {\"lat\" : -25.5249, \"lng\" : -54.5400 } ,\n\n\n\n  {\"lat\" : -25.5470, \"lng\" : -54.589 }\n]";
+		System.out.println("Carregando informacoes do mapa de caloura!");
+		
+
+		return jeison;
+	}
+	
+	
 }
