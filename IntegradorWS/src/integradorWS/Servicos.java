@@ -1,9 +1,14 @@
 package integradorWS;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -11,10 +16,15 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import DAO.DAOEntity;
 import DAO.DAOUsuario;
 import Model.Usuario;
+
 
 @Path("/servicos")
 public class Servicos {
@@ -98,6 +108,28 @@ public class Servicos {
 		
 
 		return jeison;
+	}
+	
+	@POST
+	@Path("/enviararquivo")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	public void uploadupload(@FormDataParam("file") InputStream arquivoChegando,
+			@FormDataParam("file") FormDataContentDisposition detalhes){
+		try{
+			OutputStream out = null;
+			int ler = 0;
+			byte[] bytes = new byte[1024];
+			File saida = new File("c:/users/teste.pdf");
+			out = new FileOutputStream(saida);
+			ler = arquivoChegando.read(bytes);
+			while( ler != -1 ){
+				out.write(bytes, 0, ler);
+			}
+			out.flush();
+			out.close();
+		}catch(Exception e){
+			// nao vou tratar, pq n quero!
+		}
 	}
 	
 	
