@@ -1,13 +1,18 @@
 package integradorWS;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.security.SecureRandom;
+import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.imageio.ImageIO;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.FormParam;
@@ -24,6 +29,10 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 import DAO.DAOEntity;
 import DAO.DAOUsuario;
 import Model.Usuario;
+import sun.misc.BASE64Decoder;
+
+import java.util.Base64;
+
 
 
 @Path("/servicos")
@@ -119,7 +128,7 @@ public class Servicos {
 			OutputStream out = null;
 			int ler = 0;
 			byte[] bytes = new byte[1024];
-			File saida = new File("c:/users/teste.pdf");
+			File saida = new File("c:/uploads/teste.jpeg");
 			out = new FileOutputStream(saida);
 			ler = arquivoChegando.read(bytes);
 			while( ler != -1 ){
@@ -129,6 +138,39 @@ public class Servicos {
 			out.close();
 		}catch(Exception e){
 			// nao vou tratar, pq n quero!
+		}
+	}
+	
+	@POST
+	@Path("/enviararquivo2")
+	public String uploadupload2(@FormParam("descricao") String descricao,
+			@FormParam("imgb64") String imgb64,
+			@FormParam("latitude") Double latitude,
+			@FormParam("longitude") Double longitude){
+		try{
+			System.out.println("desc: " + descricao);
+			System.out.println("lat: " + latitude);
+			System.out.println("lng: " + longitude);
+			System.out.println("photo: " + imgb64.length());
+			
+			
+			BufferedImage image = null;
+			byte[] imageByte;
+	
+			BASE64Decoder decoder = new BASE64Decoder();
+			imageByte = decoder.decodeBuffer(imgb64);
+			ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+			image = ImageIO.read(bis);
+			bis.close();
+				 
+			// write the image to a file
+			File outputfile = new File("c:/imagens/"+Long.toHexString(Double.doubleToLongBits(Math.random()))+"imgUploaded.jpeg");
+			ImageIO.write(image, "jpeg", outputfile);
+			
+			return "upload com sucesso!";
+			
+		}catch(Exception e){
+			return "Deu ruim";
 		}
 	}
 	
