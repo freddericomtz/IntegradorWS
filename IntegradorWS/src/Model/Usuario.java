@@ -3,15 +3,21 @@ package Model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GeneratorType;
+
+import java.util.List;
+
 
 @Entity
 @Table(name="usuario")
@@ -27,12 +33,27 @@ public class Usuario implements Serializable {
 	
 	@Column(name="login")
 	private String login;
-	
+
 	@Column(name="senha")
 	private String senha;
 	
+	@Column(name="telefone")
+	private String telefone;
+	
 	@Column(name="dataultimologin")
 	private Date dataUltimoLogin;
+	
+	@OneToMany(mappedBy = "usuario", targetEntity = Denuncia.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Denuncia> denuncia;
+
+		
+	public List<Denuncia> getDenuncia() {
+		return denuncia;
+	}
+
+	public void setDenuncia(List<Denuncia> denuncia) {
+		this.denuncia = denuncia;
+	}
 
 	public Integer getId() {
 		return Id;
@@ -74,5 +95,12 @@ public class Usuario implements Serializable {
 		this.dataUltimoLogin = dataUltimoLogin;
 	}
 
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}	
 }
 

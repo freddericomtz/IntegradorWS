@@ -15,8 +15,8 @@ import Services.Conexao;
 
 public class DAOEntity<T extends Serializable> {
 	 @PersistenceContext(unitName = "trabalho")
-	    private final EntityManager entityManager;
-	    private final Class<T> persistentClass;
+	    protected final EntityManager entityManager;
+	 	protected final Class<T> persistentClass;
 
 	 
 		    public DAOEntity() {
@@ -34,6 +34,21 @@ public class DAOEntity<T extends Serializable> {
 		        try {
 		            tx.begin();
 		            getEntityManager().persist(entity);
+		            tx.commit();
+		        } catch (Throwable t) {
+		            t.printStackTrace();
+		            tx.rollback();
+		        } finally {
+		            close();
+		        }
+		    }
+		    
+		    public void update(T entity) {
+		        EntityTransaction tx = getEntityManager().getTransaction();
+	 
+		        try {
+		            tx.begin();
+		            getEntityManager().merge(entity);
 		            tx.commit();
 		        } catch (Throwable t) {
 		            t.printStackTrace();
