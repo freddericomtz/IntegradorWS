@@ -15,6 +15,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name="denuncia")
 public class Denuncia implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
@@ -23,7 +26,6 @@ public class Denuncia implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="usuario_id")
 	private Usuario usuario;
-	
 	
 	@Column(name="dataDenuncia")
 	private Date dataDenuncia;

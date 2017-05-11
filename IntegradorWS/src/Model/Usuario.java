@@ -23,6 +23,8 @@ import java.util.List;
 @Table(name="usuario")
 public class Usuario implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
@@ -31,7 +33,7 @@ public class Usuario implements Serializable {
 	@Column(name="nome")
 	private String nome;
 	
-	@Column(name="login")
+	@Column(name="login",unique=true)
 	private String login;
 
 	@Column(name="senha")
@@ -45,6 +47,12 @@ public class Usuario implements Serializable {
 	
 	@OneToMany(mappedBy = "usuario", targetEntity = Denuncia.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Denuncia> denuncia;
+	
+	@Column(name="likes", columnDefinition = "int default 0")
+	private Integer likes;
+
+	@Column(name="dislikes", columnDefinition = "int default 0")
+	private Integer dislikes;
 
 		
 	public List<Denuncia> getDenuncia() {
@@ -101,6 +109,22 @@ public class Usuario implements Serializable {
 
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
+	}
+
+	public Integer getLikes() {
+		return likes;
+	}
+
+	public void setLikes(Integer likes) {
+		this.likes = likes;
+	}
+
+	public Integer getDislikes() {
+		return dislikes;
+	}
+
+	public void setDislikes(Integer dislikes) {
+		this.dislikes = dislikes;
 	}	
 }
 

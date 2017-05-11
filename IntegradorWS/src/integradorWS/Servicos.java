@@ -28,6 +28,7 @@ import javax.ws.rs.core.MediaType;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.sun.glass.ui.Pixels.Format;
@@ -112,6 +113,7 @@ public class Servicos {
 
 			rsp.addProperty("resposta", true);
 			rsp.addProperty("idUsuario", usu1.getId());
+			
 		}
 		else{
 			rsp.addProperty("resposta", false);			
@@ -154,6 +156,36 @@ public class Servicos {
 		
 		return rsp.toString();
 	}
+	
+	@Path("/trazum")
+	@POST
+	public String Trazum(@FormParam("id") int id){
+	
+
+        System.out.println("id recebido: "+id);
+		
+		DAOEntity daoUsuario = new DAOUsuario();		
+		Usuario usuario = (Usuario) daoUsuario.findById(id);
+		JsonObject rsp = new JsonObject();
+					
+		if(usuario!=null){
+			rsp.addProperty("nome", usuario.getNome());
+			rsp.addProperty("login", usuario.getLogin());
+			rsp.addProperty("senha", usuario.getSenha());
+			rsp.addProperty("telefone", usuario.getTelefone());
+			rsp.addProperty("likes", usuario.getLikes());
+			rsp.addProperty("dislikes", usuario.getDislikes());
+			rsp.addProperty("data", usuario.getDataUltimoLogin().toString());
+			
+			return rsp.toString();
+			
+		}else {
+			return "erro";
+		}
+				
+		
+	}
+	
 	
 	@Path("/consultaMapaCalor")
 	@GET
